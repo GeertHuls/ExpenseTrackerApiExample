@@ -31,7 +31,6 @@ namespace ExpenseTracker.API.Controllers
 
                 return Ok(expenseGroups.ToList()
                     .Select(eg => _expenseGroupFactory.CreateExpenseGroup(eg)));
-
             }
             catch (Exception)
             {

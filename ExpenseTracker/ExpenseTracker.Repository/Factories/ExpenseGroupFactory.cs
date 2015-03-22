@@ -6,12 +6,7 @@ namespace ExpenseTracker.Repository.Factories
 {
     public class ExpenseGroupFactory
     {
-        ExpenseFactory expenseFactory = new ExpenseFactory();
-
-        public ExpenseGroupFactory()
-        {
-
-        }
+        readonly ExpenseFactory expenseFactory = new ExpenseFactory();
 
         public ExpenseGroup CreateExpenseGroup(DTO.ExpenseGroup expenseGroup)
         {
@@ -26,7 +21,6 @@ namespace ExpenseTracker.Repository.Factories
             };
         }
 
-
         public DTO.ExpenseGroup CreateExpenseGroup(ExpenseGroup expenseGroup)
         {
             return new DTO.ExpenseGroup()
@@ -39,8 +33,5 @@ namespace ExpenseTracker.Repository.Factories
                 Expenses = expenseGroup.Expenses.Select(e => expenseFactory.CreateExpense(e)).ToList()
             };
         }
-
-         
-         
     }
 }
