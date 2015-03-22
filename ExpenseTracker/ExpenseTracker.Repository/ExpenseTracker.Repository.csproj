@@ -50,10 +50,13 @@
     <Compile Include="Entities\ExpenseGroup.cs" />
     <Compile Include="Entities\ExpenseGroupStatus.cs" />
     <Compile Include="Entities\ExpenseTrackerContext.cs" />
+    <Compile Include="ExpenseTrackerRepository.cs" />
+    <Compile Include="IExpenseTrackerEFRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryActionResult.cs" />
+    <Compile Include="RepositoryActionStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
