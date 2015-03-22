@@ -18,7 +18,6 @@ namespace ExpenseTracker.Api
 
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-
             config.Formatters.JsonFormatter.SerializerSettings.Formatting
                 = Newtonsoft.Json.Formatting.Indented;
 
