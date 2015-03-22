@@ -37,5 +37,21 @@ namespace ExpenseTracker.API.Controllers
                 return InternalServerError();
             }
         }
+
+        public IHttpActionResult Get(int id)
+        {
+            try
+            {
+                var expenseGroup = _repository.GetExpenseGroup(id);
+
+                return expenseGroup == null
+                    ? (IHttpActionResult) NotFound()
+                    : Ok(_expenseGroupFactory.CreateExpenseGroup(expenseGroup));
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }
