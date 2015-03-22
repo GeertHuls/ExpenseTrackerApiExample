@@ -9,7 +9,7 @@ namespace ExpenseTracker.API.Controllers
 {
     public class ExpenseGroupsController : ApiController
     {
-        IExpenseTrackerRepository _repository;
+        readonly IExpenseTrackerRepository _repository;
         readonly ExpenseGroupFactory _expenseGroupFactory = new ExpenseGroupFactory();
 
         public ExpenseGroupsController()
@@ -21,8 +21,7 @@ namespace ExpenseTracker.API.Controllers
         public ExpenseGroupsController(IExpenseTrackerRepository repository)
         {
             _repository = repository;
-        }    
-
+        }
 
         public IHttpActionResult Get()
         {
