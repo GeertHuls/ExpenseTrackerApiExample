@@ -53,5 +53,53 @@ namespace ExpenseTracker.API.Controllers
                 return InternalServerError();
             }
         }
+
+        /// <summary>
+        /// Test http post:
+        /// 
+        /// HEADER
+        /// ------
+        /// User-Agent: Fiddler
+        /// Accept: application/json
+        /// Host: localhost:53204
+        /// Content-Length: 0
+        /// Content-Type: application/json
+        /// 
+        /// CONTENT
+        /// -------
+        /// {
+        ///  "userid" : "https://expsensetrackeridsrv3/embedded_1",
+        ///  "title" : "New ExpenseGroup",
+        ///  "description" : "ExpenseGroup description",
+        ///  "expenseGroupStatusId" : 1
+        // }
+        /// 
+        /// </summary>
+        [HttpPost]
+        public IHttpActionResult Post([FromBody] DTO.ExpenseGroup expenseGroup)
+        {
+            try
+            {
+                if (expenseGroup == null)
+                {
+                    return BadRequest();
+                }
+
+                var group = _expenseGroupFactory.CreateExpenseGroup(expenseGroup);
+                var result = _repository.InsertExpenseGroup(group);
+
+                if (result.Status != RepositoryActionStatus.Created) return BadRequest();
+
+                var newExpenseGroup = _expenseGroupFactory.CreateExpenseGroup(result.Entity);
+                    
+                var uriNewExpenseGroup = string.Format("{0}/{1}", Request.RequestUri, newExpenseGroup.Id);
+                return Created(uriNewExpenseGroup, newExpenseGroup);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
     }
 }
