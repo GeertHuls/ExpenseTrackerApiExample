@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ExpenseGroupsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -115,10 +116,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExpenseTracker.DTO\ExpenseTracker.DTO.csproj">
+      <Project>{588BE4FA-CD71-486C-992A-2D357F45C14F}</Project>
+      <Name>ExpenseTracker.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExpenseTracker.Repository\ExpenseTracker.Repository.csproj">
       <Project>{C6829C57-58DA-411A-875A-5FBA32D256DD}</Project>
       <Name>ExpenseTracker.Repository</Name>
