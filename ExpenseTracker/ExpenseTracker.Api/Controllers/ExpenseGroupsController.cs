@@ -62,7 +62,7 @@ namespace ExpenseTracker.API.Controllers
         /// User-Agent: Fiddler
         /// Accept: application/json
         /// Host: localhost:53204
-        /// Content-Length: 0
+        /// Content-Length: 171
         /// Content-Type: application/json
         /// 
         /// CONTENT
@@ -72,7 +72,7 @@ namespace ExpenseTracker.API.Controllers
         ///  "title" : "New ExpenseGroup",
         ///  "description" : "ExpenseGroup description",
         ///  "expenseGroupStatusId" : 1
-        // }
+        /// }
         /// 
         /// </summary>
         [HttpPost]
@@ -101,5 +101,55 @@ namespace ExpenseTracker.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Test http put:
+        /// 
+        /// HEADER
+        /// ------
+        /// User-Agent: Fiddler
+        /// Accept: application/json
+        /// Host: localhost:53204
+        /// Content-Length: 171
+        /// Content-Type: application/json
+        /// 
+        /// CONTENT
+        /// -------
+        /// {
+        ///  "id" : 15,
+        ///  "userid" : "https://expsensetrackeridsrv3/embedded_1",
+        ///  "title" : "New ExpenseGroup updated",
+        ///  "description" : "ExpenseGroup description",
+        ///  "expenseGroupStatusId" : 1
+        /// }
+        /// 
+        /// </summary>
+        public IHttpActionResult Put(int id, [FromBody] DTO.ExpenseGroup expenseGroup)
+        {
+            try
+            {
+                if (expenseGroup == null)
+                {
+                    return BadRequest();
+                }
+
+                var group = _expenseGroupFactory.CreateExpenseGroup(expenseGroup);
+                var result = _repository.UpdateExpenseGroup(group);
+
+                switch (result.Status)
+                {
+                    case RepositoryActionStatus.Updated:
+                        var updatedExpenseGroup = _expenseGroupFactory.CreateExpenseGroup(result.Entity);
+                        return Ok(updatedExpenseGroup);
+                    case RepositoryActionStatus.NotFound:
+                        return NotFound();
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }
