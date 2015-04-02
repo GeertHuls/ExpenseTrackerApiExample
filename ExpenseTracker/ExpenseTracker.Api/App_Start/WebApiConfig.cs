@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Headers;
 
 namespace ExpenseTracker.Api
 {
@@ -17,6 +18,9 @@ namespace ExpenseTracker.Api
                 defaults: new { id = RouteParameter.Optional });
 
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
+                new MediaTypeHeaderValue("application/json-patch+json"));
 
             config.Formatters.JsonFormatter.SerializerSettings.Formatting
                 = Newtonsoft.Json.Formatting.Indented;
