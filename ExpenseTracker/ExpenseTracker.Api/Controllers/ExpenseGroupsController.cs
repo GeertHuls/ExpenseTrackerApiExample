@@ -5,6 +5,7 @@ using ExpenseTracker.Repository;
 using ExpenseTracker.Repository.Entities;
 using ExpenseTracker.Repository.Factories;
 using Marvin.JsonPatch;
+using System.Net;
 
 namespace ExpenseTracker.API.Controllers
 {
@@ -198,6 +199,38 @@ namespace ExpenseTracker.API.Controllers
                     // map to dto
                     var patchedExpenseGroup = _expenseGroupFactory.CreateExpenseGroup(result.Entity);
                     return Ok(patchedExpenseGroup);
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        /// <summary>
+        /// Test DELETE http://localhost:679/api/expensegroups/14
+        /// 
+        /// HEADER
+        /// ------
+        /// User-Agent: Fiddler
+        /// Content-Type: application/json
+        /// 
+        /// </summary>
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                var result = _repository.DeleteExpenseGroup(id);
+
+                if (result.Status == RepositoryActionStatus.Deleted)
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else if (result.Status == RepositoryActionStatus.NotFound)
+                {
+                    return NotFound();
                 }
 
                 return BadRequest();
