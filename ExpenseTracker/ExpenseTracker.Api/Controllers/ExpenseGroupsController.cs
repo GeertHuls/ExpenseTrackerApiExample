@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Web.Http;
+﻿using ExpenseTracker.API.Helpers;
 using ExpenseTracker.Repository;
 using ExpenseTracker.Repository.Entities;
 using ExpenseTracker.Repository.Factories;
 using Marvin.JsonPatch;
+using System;
+using System.Linq;
 using System.Net;
+using System.Web.Http;
 
 namespace ExpenseTracker.API.Controllers
 {
@@ -25,13 +26,22 @@ namespace ExpenseTracker.API.Controllers
             _repository = repository;
         }
 
-        public IHttpActionResult Get()
+        /// <summary>
+        /// Examples:
+        /// 
+        /// http://localhost:679/api/expensegroups?sort=title
+        /// http://localhost:679/api/expensegroups?sort=expenseGroupStatusId,title
+        /// http://localhost:679/api/expensegroups?sort=-title (sort descending)
+        /// </summary>
+        public IHttpActionResult Get(string sort = "id")
         {
             try
             {
                 var expenseGroups = _repository.GetExpenseGroups();
 
-                return Ok(expenseGroups.ToList()
+                return Ok(expenseGroups
+                    .ApplySort(sort)
+                    .ToList()
                     .Select(eg => _expenseGroupFactory.CreateExpenseGroup(eg)));
             }
             catch (Exception)
