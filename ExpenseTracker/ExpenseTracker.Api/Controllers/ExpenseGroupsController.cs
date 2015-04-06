@@ -153,6 +153,20 @@ namespace ExpenseTracker.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Test PATCH http://localhost:679/api/expensegroups/14
+        /// 
+        /// HEADER
+        /// ------
+        /// User-Agent: Fiddler
+        /// Content-Type: application/json-patch+json
+        /// 
+        /// CONTENT
+        /// -------
+        /// [ { "op": "replace", "path": "/title", "value":"New Title Patched" },
+        ///   { "op": "copy", "from": "/title", "path": "/description" } ]
+        /// 
+        /// </summary>
         [HttpPatch]
         public IHttpActionResult Patch(int id,
             [FromBody]JsonPatchDocument<DTO.ExpenseGroup> expenseGroupPatchDocument)
