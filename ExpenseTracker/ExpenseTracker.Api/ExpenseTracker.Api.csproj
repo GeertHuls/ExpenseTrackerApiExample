@@ -104,6 +104,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ExpenseGroupsController.cs" />
+    <Compile Include="Controllers\ExpenseGroupStatussesController.cs" />
+    <Compile Include="Controllers\ExpensesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
