@@ -124,8 +124,19 @@ namespace ExpenseTracker.API.Controllers
             }
         }
 
-        [Route("expensegroups/{expenseGroupId}/expenses/{id}")]
-        [Route("expenses/{id}")]
+
+        /// <summary>
+        /// Use custom request header to specify version
+        /// 
+        /// api-version: 1
+        /// 
+        /// or custom content type header:
+        /// 
+        /// Accept: application/vnd.expensetrackerapi.v1+json
+        /// 
+        /// </summary>}
+        [VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 1)]
+        [VersionedRoute("expenses/{id}", 1)]
         public IHttpActionResult Get(int id, int? expenseGroupId = null)
         {
             try
@@ -163,7 +174,49 @@ namespace ExpenseTracker.API.Controllers
             {
                 return InternalServerError();
             }
+        }
+
+        [VersionedRoute("expensegroups/{expenseGroupId}/expenses/{id}", 2)]
+        [VersionedRoute("expenses/{id}", 2)]
+        public IHttpActionResult GetV2(int id, int? expenseGroupId = null)
+        {
+            try
+            {
+                Repository.Entities.Expense expense = null;
+
+                if (expenseGroupId == null)
+                {
+                    expense = _repository.GetExpense(id);
+                }
+                else
+                {
+                    var expensesForGroup = _repository.GetExpenses((int)expenseGroupId);
+
+                    // if the group doesn't exist, we shouldn't try to get the expenses
+                    if (expensesForGroup != null)
+                    {
+                        expense = expensesForGroup.FirstOrDefault(eg => eg.Id == id);
+                    }
+                }
+
+                if (expense != null)
+                {
+                    var returnValue = _expenseFactory.CreateExpense(expense);
+                    return Ok(returnValue);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }     
+
 
         [Route("expenses/{id}")]
         public IHttpActionResult Delete(int id)
