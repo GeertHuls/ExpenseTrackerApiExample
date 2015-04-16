@@ -1,4 +1,6 @@
 ﻿using ExpenseTracker.DTO;
+using ExpenseTracker.WebClient.Helpers;
+using ExpenseTracker.WebClient.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,44 @@ namespace ExpenseTracker.WebClient.Controllers
     public class ExpenseGroupsController : Controller
     {
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(new List<ExpenseGroup>());
+            var client = ExpenseTrackerHttpClient.GetClient();
 
+
+            var model = new ExpenseGroupsViewModel();
+
+            var egsResponse = await client.GetAsync("api/expensegroupstatusses");
+
+            if (egsResponse.IsSuccessStatusCode)
+            {
+                string egsContent = await egsResponse.Content.ReadAsStringAsync();
+                var lstExpenseGroupStatusses = JsonConvert
+                    .DeserializeObject<IEnumerable<ExpenseGroupStatus>>(egsContent);
+
+                model.ExpenseGroupStatusses = lstExpenseGroupStatusses;
+            }
+            else
+            {
+                return Content("An error occurred.");
+            }
+
+            var response = await client.GetAsync("api/expensegroups");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var expenseGroups = JsonConvert
+                    .DeserializeObject<IEnumerable<ExpenseGroup>>(content);
+
+                model.ExpenseGroups = expenseGroups;
+            }
+            else
+            {
+                return Content("An error occured.");
+            }
+
+            return View(model);
         }
 
  
