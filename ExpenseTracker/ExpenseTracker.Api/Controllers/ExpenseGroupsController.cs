@@ -56,8 +56,8 @@ namespace ExpenseTracker.API.Controllers
         [Route("api/expensegroups", Name = "ExpenseGroupsList")] //Named route used by url helper
         public IHttpActionResult Get(string sort = "id",
             string status = null, string userId = null,
-            string fields = null, 
-            int page = 1, int pageSize = 5)
+            string fields = null,
+            int page = 1, int pageSize = MaxPageSize)
         {
             try
             {
