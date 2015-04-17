@@ -199,6 +199,7 @@ namespace ExpenseTracker.API.Controllers
         /// }
         /// 
         /// </summary>
+        [Route("api/expensegroups")]
         [HttpPost]
         public IHttpActionResult Post([FromBody] DTO.ExpenseGroup expenseGroup)
         {
