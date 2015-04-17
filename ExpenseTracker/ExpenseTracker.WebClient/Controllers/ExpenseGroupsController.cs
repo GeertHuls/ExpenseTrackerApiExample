@@ -123,8 +123,6 @@ namespace ExpenseTracker.WebClient.Controllers
         // POST: ExpenseGroups/Edit/5   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, ExpenseGroup expenseGroup)
         {
             try
