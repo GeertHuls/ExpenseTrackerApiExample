@@ -53,7 +53,7 @@ namespace ExpenseTracker.API.Controllers
         /// http://localhost:679/api/expensegroups?fields=id,title,expenses.id //only access id field of associated resource
         /// 
         /// </summary>
-        [Route("api/expensegroups", Name = "ExpenseGroupsList")]
+        [Route("api/expensegroups", Name = "ExpenseGroupsList")] //Named route used by url helper
         public IHttpActionResult Get(string sort = "id",
             string status = null, string userId = null,
             string fields = null, 
