@@ -34,7 +34,7 @@ namespace ExpenseTracker.WebClient.Controllers
                 return Content("An error occurred.");
             }
 
-            var response = await client.GetAsync("api/expensegroups");
+            var response = await client.GetAsync("api/expensegroups?sort=expensegroupstatusid,title");
 
             if (response.IsSuccessStatusCode)
             {
