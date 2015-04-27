@@ -1,10 +1,12 @@
 ﻿using ExpenseTracker.DTO;
 using ExpenseTracker.WebClient.Helpers;
 using ExpenseTracker.WebClient.Models;
+using Marvin.JsonPatch;
 using Newtonsoft.Json;
 using PagedList;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -128,7 +130,8 @@ namespace ExpenseTracker.WebClient.Controllers
         {
             var client = ExpenseTrackerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync("api/expensegroups/" + id);
+            HttpResponseMessage response = await client.GetAsync("api/expensegroups/" + id
+                + "?fields=id,title,description");
 
             if (response.IsSuccessStatusCode)
             {
@@ -150,12 +153,13 @@ namespace ExpenseTracker.WebClient.Controllers
             {
                 var client = ExpenseTrackerHttpClient.GetClient();
 
-                // serialize & PUT
-                var serializedItemToUpdate = JsonConvert.SerializeObject(expenseGroup);
+                var patchDoc = new JsonPatchDocument<DTO.ExpenseGroup>();
+                patchDoc.Replace(eg => eg.Title, expenseGroup.Title);
+                patchDoc.Replace(eg => eg.Description, expenseGroup.Description);
 
-                var response = await client.PutAsync("api/expensegroups/" + id,
-                    new StringContent(serializedItemToUpdate,
-                    System.Text.Encoding.Unicode, "application/json"));
+                var serializedItemToUpdate = JsonConvert.SerializeObject(patchDoc);
+                var response = await client.PatchAsync("api/expensegroups/" + id,
+                    new StringContent(serializedItemToUpdate, Encoding.Unicode, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {

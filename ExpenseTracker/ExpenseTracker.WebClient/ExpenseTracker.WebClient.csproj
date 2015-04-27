@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Marvin.JsonPatch">
+      <HintPath>..\packages\Marvin.JsonPatch.0.7.0\lib\portable-net40+win+wpa81\Marvin.JsonPatch.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -130,6 +133,7 @@
     </Compile>
     <Compile Include="Helpers\ExpenseTrackerHttpClient.cs" />
     <Compile Include="Helpers\HeaderParser.cs" />
+    <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\PagingInfo.cs" />
     <Compile Include="Models\ExpenseGroupsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
