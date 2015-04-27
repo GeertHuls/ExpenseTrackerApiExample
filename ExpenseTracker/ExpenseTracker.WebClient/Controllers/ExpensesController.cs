@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.DTO;
+using ExpenseTracker.WebClient.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,21 @@ namespace ExpenseTracker.WebClient.Controllers
          
 
         // GET: Expenses/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var client = ExpenseTrackerHttpClient.GetClient("2");
+
+            HttpResponseMessage response = await client.GetAsync("api/expenses/" + id
+                + "?fields=id,description,date,amount");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<Expense>(content);
+                return View(model);
+            }
+
+            return Content("An error occurred.");
         } 
 
         [HttpPost]
