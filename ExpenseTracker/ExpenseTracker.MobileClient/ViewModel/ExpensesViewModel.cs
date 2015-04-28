@@ -88,8 +88,16 @@ namespace ExpenseTracker.MobileClient.ViewModel
             // load expenses for group
             var client = ExpenseTrackerHttpClient.GetClient();
 
-            HttpResponseMessage response = await client.GetAsync("api/expensegroups/"
-                + ExpenseGroup.Id + "/expenses?fields=id,date,description,amount");
+            HttpRequestMessage request = new HttpRequestMessage();
+            request.Method = HttpMethod.Get;
+            request.RequestUri = new Uri("api/expensegroups/"
+                + ExpenseGroup.Id + "/expenses?fields=id,date,description,amount", UriKind.Relative);
+            request.Headers.CacheControl = new CacheControlHeaderValue()
+                {
+                    NoCache = true
+                };
+
+            HttpResponseMessage response = await client.GetAsync(request);
               
             if (response.IsSuccessStatusCode)
             {
@@ -102,8 +110,6 @@ namespace ExpenseTracker.MobileClient.ViewModel
                 // something went wrong, log this, handle this, show message, ...
             }
         }
-
-
 
         private async void SetNewExpenseGroup(DTO.ExpenseGroup expenseGroup)
         {

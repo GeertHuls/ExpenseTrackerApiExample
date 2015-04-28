@@ -19,7 +19,11 @@ namespace ExpenseTracker.MobileClient.Helpers
             if (currentClient == null)
             {
 
-                currentClient = new HttpClient();
+                currentClient = new HttpClient(
+                    new Marvin.HttpCache.HttpCacheHandler()
+                    {
+                        InnerHandler = new HttpClientHandler()
+                    });
 
                 currentClient.BaseAddress = new Uri(ExpenseTrackerConstants.ExpenseTrackerAPI);
 
