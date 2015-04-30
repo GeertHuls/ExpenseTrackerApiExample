@@ -14,6 +14,8 @@ namespace ExpenseTracker.IdSrv
     {
         public void Configuration(IAppBuilder app)
         {
+            //Well known url: https://localhost:44305/identity/.well-known/openid-configuration
+
             app.Map("/identity", idsrvApp =>
                 {
                     idsrvApp.UseIdentityServer(
@@ -25,7 +27,7 @@ namespace ExpenseTracker.IdSrv
                             Factory = InMemoryFactory.Create(
                                 users: Users.Get(),
                                 clients: Clients.Get(),
-                                scopes: Scopes.Get(),
+                                scopes: Scopes.Get()
                             ),
                             
                             SigningCertificate = LoadCertificate()
