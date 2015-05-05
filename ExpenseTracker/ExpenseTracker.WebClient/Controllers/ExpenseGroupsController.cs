@@ -12,9 +12,9 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.WebClient.Controllers
 {
+    [Authorize]
     public class ExpenseGroupsController : Controller
     {
-
         public async Task<ActionResult> Index(int? page = 1)
         {
             var client = ExpenseTrackerHttpClient.GetClient();
