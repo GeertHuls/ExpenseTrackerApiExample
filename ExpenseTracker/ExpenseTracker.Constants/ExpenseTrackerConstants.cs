@@ -8,7 +8,7 @@ namespace ExpenseTracker.Constants
 
         public const string IdSrvIssueUri = "https://expensetrackeridsrv3/embedded";
 
-        public const string IdSrv = "https://localhost:44305/identity";
+        public const string IdSrv = "https://idsrv.local:444/identity";
         public const string IdSrvToken = IdSrv + "/connect/token";
         public const string IdSrvAuthorize = IdSrv + "/connect/authorize";
         public const string IdSrvUserInfo = IdSrv + "/connect/userinfo";
