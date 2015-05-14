@@ -33,6 +33,11 @@ namespace ExpenseTracker.WebClient
                 //id_token for an identity
                 
                 
+                //There are 3 types of response types:
+                // code: for authorization code
+                // token: for an access token
+                // id_token: for identity token
+
                 ResponseType = "code id_token", // this depends on the flow you are using (implit vs authorization code flow)
                 //the type above is configured for hybrid flow:
                 //- we are working with identity so we require an id_token
@@ -41,6 +46,7 @@ namespace ExpenseTracker.WebClient
                 //Example: authorization code flow requires authoriation code
                 //If the client does not call the correct response type, the flow would not be able to successfully complete
 
+                //Configure resource scopes:
                 Scope = "openid", //profile
                 //openid scope is a requirement for openid support
 

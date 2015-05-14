@@ -60,6 +60,18 @@ namespace ExpenseTracker.IdSrv.Config
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Kenneth"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Mills"),
                }
+            },
+            new InMemoryUser
+            {
+                Username = "Geert",
+                Password = "secret",
+                Subject = "5",
+
+                Claims = new[]
+                {
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Geert"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Huls"),
+               }
             }
            };
         }

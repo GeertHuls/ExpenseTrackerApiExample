@@ -20,6 +20,7 @@ namespace ExpenseTracker.IdSrv.Config
                     ClientId = "mvc",
                     Flow = Flows.Hybrid,
                     RequireConsent = true, //ensures that user will see approve consent screen
+                    //(in this example we only ask for openid so the app only ask to allow personal identity)
 
                     RedirectUris = new List<string>
                         {
