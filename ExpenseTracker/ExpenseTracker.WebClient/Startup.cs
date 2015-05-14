@@ -35,10 +35,10 @@ namespace ExpenseTracker.WebClient
                 
                 //There are 3 types of response types:
                 // code: for authorization code
-                // token: for an access token
+                // token: for an access token and to get userInfo
                 // id_token: for identity token
 
-                ResponseType = "code id_token", // this depends on the flow you are using (implit vs authorization code flow)
+                ResponseType = "code id_token token", // this depends on the flow you are using (implit vs authorization code flow)
                 //the type above is configured for hybrid flow:
                 //- we are working with identity so we require an id_token
                 //- we also require the authorization code so that the flow can successfully complete
@@ -63,6 +63,17 @@ namespace ExpenseTracker.WebClient
                     MessageReceived = async n =>
                     {
                         EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.IdToken);
+                        
+                        //When 'token' is set in reponse type, the access token will contain the profile and openid scope
+                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.AccessToken);
+                        //this allows us to access the user endpoint and retrieve the profile values
+                        //given_name and family_name values will be available in userInfo
+                        var userInfo = await EndpointAndTokenHelper
+                            .CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);
+
+                        //Best practise:
+                        //Put very basic information in the id_token,
+                        //but return extended information through a seperate call to the userinfo endpoint.
                     }
                 }
             });
