@@ -1,9 +1,13 @@
 ﻿using ExpenseTracker.Constants;
 using ExpenseTracker.WebClient.Helpers;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens;
+using System.Security.Claims;
 
 [assembly: OwinStartup(typeof(ExpenseTracker.WebClient.Startup))]
 
@@ -13,6 +17,11 @@ namespace ExpenseTracker.WebClient
     {
         public void Configuration(IAppBuilder app)
         {
+            //This line prevent claim type to be mapped to dotnet's claim types, it resets the mapping dictionary,
+            //ensure that no mapping occurs.
+            //Second benefit is that the claim's names are much more readable.
+            JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "Cookies"
@@ -74,7 +83,41 @@ namespace ExpenseTracker.WebClient
                         //Best practise:
                         //Put very basic information in the id_token,
                         //but return extended information through a seperate call to the userinfo endpoint.
-                    }
+                    },
+
+                    //Using claims transformation
+                    SecurityTokenValidated = async n =>
+                    {
+                        var userInfo = await EndpointAndTokenHelper.CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);
+
+                        var givenNameClaim = new Claim(
+                            Thinktecture.IdentityModel.Client.JwtClaimTypes.GivenName,
+                            userInfo.Value<string>("given_name"));
+
+                        var familyNameClaim = new Claim(
+                            Thinktecture.IdentityModel.Client.JwtClaimTypes.FamilyName,
+                            userInfo.Value<string>("family_name"));
+
+                        var newIdentity = new ClaimsIdentity(
+                           n.AuthenticationTicket.Identity.AuthenticationType,
+                           Thinktecture.IdentityModel.Client.JwtClaimTypes.GivenName,
+                           Thinktecture.IdentityModel.Client.JwtClaimTypes.Role);
+
+                        newIdentity.AddClaim(givenNameClaim);
+                        newIdentity.AddClaim(familyNameClaim);
+
+                        var issuerClaim = n.AuthenticationTicket.Identity
+                            .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Issuer);
+                        var subjectClaim = n.AuthenticationTicket.Identity
+                            .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
+
+                        newIdentity.AddClaim(new Claim("unique_user_key",
+                            issuerClaim.Value + "_" + subjectClaim.Value));
+
+                        n.AuthenticationTicket = new AuthenticationTicket(
+                            newIdentity,
+                            n.AuthenticationTicket.Properties);
+                    },
                 }
             });
 
