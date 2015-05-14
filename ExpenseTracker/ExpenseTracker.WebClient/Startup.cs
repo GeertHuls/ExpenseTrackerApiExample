@@ -47,7 +47,15 @@ namespace ExpenseTracker.WebClient
                 //If the client does not call the correct response type, the flow would not be able to successfully complete
 
                 //Configure resource scopes:
-                Scope = "openid", //profile
+                //Type of id scope are like a collections of claims
+                //Profile matches to profile related claims such as given_name, family_name, picture, gender, etc...
+
+                //Other scopes:
+                // - address: country, postal code, etc... 
+                // - ...
+                //Check openid tech spec to get a full list of scope types
+
+                Scope = "openid profile",
                 //openid scope is a requirement for openid support
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
