@@ -8,6 +8,7 @@ using Owin;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Web.Helpers;
 
 [assembly: OwinStartup(typeof(ExpenseTracker.WebClient.Startup))]
 
@@ -21,6 +22,9 @@ namespace ExpenseTracker.WebClient
             //ensure that no mapping occurs.
             //Second benefit is that the claim's names are much more readable.
             JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
+
+            //Use this claim instead of identifier or identity provider claim
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
@@ -111,8 +115,8 @@ namespace ExpenseTracker.WebClient
                         var subjectClaim = n.AuthenticationTicket.Identity
                             .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
 
-                        newIdentity.AddClaim(new Claim("unique_user_key",
-                            issuerClaim.Value + "_" + subjectClaim.Value));
+                        newIdentity.AddClaim(new Claim("unique_user_key", //this claim is used as AntiForgery token
+                            issuerClaim.Value + "_" + subjectClaim.Value)); //userId is composed of issuer and subject
 
                         n.AuthenticationTicket = new AuthenticationTicket(
                             newIdentity,

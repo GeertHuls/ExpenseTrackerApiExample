@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using PagedList;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -100,7 +101,10 @@ namespace ExpenseTracker.WebClient.Controllers
 
                 // an expensegroup is created with status "Open", for the current user
                 expenseGroup.ExpenseGroupStatusId = 1;
-                expenseGroup.UserId = @"https://expensetrackeridsrv3/embedded_1";
+
+                var claimsIdentity = this.User.Identity as ClaimsIdentity;
+                var userId = claimsIdentity.FindFirst("unique_user_key").Value;
+                expenseGroup.UserId = userId;
 
                 var serializedItemToCreate = JsonConvert.SerializeObject(expenseGroup);
 
