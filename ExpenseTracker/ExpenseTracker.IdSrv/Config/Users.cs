@@ -20,6 +20,10 @@ namespace ExpenseTracker.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Kevin"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Dockx"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebWriteUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileWriteUser") 
                }
             }
             ,
@@ -33,6 +37,8 @@ namespace ExpenseTracker.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Sven"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Vercauteren"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser")
                }
             },
              
@@ -46,6 +52,8 @@ namespace ExpenseTracker.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Nils"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Missorten"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser")
                }
             },
 
@@ -59,6 +67,8 @@ namespace ExpenseTracker.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Kenneth"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Mills"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebWriteUser") 
                }
             },
             new InMemoryUser
