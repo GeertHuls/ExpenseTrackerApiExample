@@ -4,9 +4,11 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using Newtonsoft.Json.Linq;
 using Owin;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Security.Claims;
 using System.Web.Helpers;
 
@@ -68,8 +70,9 @@ namespace ExpenseTracker.WebClient
                 // - ...
                 //Check openid tech spec to get a full list of scope types
 
-                Scope = "openid profile",
+                Scope = "openid profile roles",
                 //openid scope is a requirement for openid support
+                //roles scope to request roles from id server
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
@@ -102,6 +105,8 @@ namespace ExpenseTracker.WebClient
                             Thinktecture.IdentityModel.Client.JwtClaimTypes.FamilyName,
                             userInfo.Value<string>("family_name"));
 
+                        var roles = userInfo.Value<JArray>("role").ToList();
+
                         var newIdentity = new ClaimsIdentity(
                            n.AuthenticationTicket.Identity.AuthenticationType,
                            Thinktecture.IdentityModel.Client.JwtClaimTypes.GivenName,
@@ -109,6 +114,13 @@ namespace ExpenseTracker.WebClient
 
                         newIdentity.AddClaim(givenNameClaim);
                         newIdentity.AddClaim(familyNameClaim);
+
+                        foreach (var role in roles) //Add the roles to the claims:
+                        {
+                            newIdentity.AddClaim(new Claim(
+                                Thinktecture.IdentityModel.Client.JwtClaimTypes.Role,
+                                role.ToString()));
+                        }
 
                         var issuerClaim = n.AuthenticationTicket.Identity
                             .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Issuer);

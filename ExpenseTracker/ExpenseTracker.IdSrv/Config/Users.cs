@@ -71,6 +71,10 @@ namespace ExpenseTracker.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Geert"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Huls"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebWriteUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileWriteUser") 
                }
             }
            };
