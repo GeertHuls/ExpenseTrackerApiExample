@@ -38,8 +38,8 @@ namespace ExpenseTracker.IdSrv
         X509Certificate2 LoadCertificate()
         {
             return new X509Certificate2(
-                string.Format(@"{0}\Certificates\idsrv3test.pfx",
-                AppDomain.CurrentDomain.BaseDirectory), "idsrv3test");
+                string.Format(@"{0}\Certificates\idsrv.local.pfx",
+                AppDomain.CurrentDomain.BaseDirectory), "");
         }
     }
 }
