@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ExpenseTracker.Constants;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,6 @@ namespace ExpenseTracker.MobileClient.Helpers
         {
             if (currentClient == null)
             {
-
                 currentClient = new HttpClient(
                     new Marvin.HttpCache.HttpCacheHandler()
                     {

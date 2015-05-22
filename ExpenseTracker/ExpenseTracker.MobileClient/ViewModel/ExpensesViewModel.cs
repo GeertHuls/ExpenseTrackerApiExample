@@ -97,7 +97,7 @@ namespace ExpenseTracker.MobileClient.ViewModel
                     NoCache = true
                 };
 
-            HttpResponseMessage response = await client.GetAsync(request);
+            HttpResponseMessage response = await client.SendAsync(request);
               
             if (response.IsSuccessStatusCode)
             {
