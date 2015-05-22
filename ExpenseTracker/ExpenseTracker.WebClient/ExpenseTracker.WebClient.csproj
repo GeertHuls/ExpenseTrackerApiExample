@@ -141,6 +141,15 @@
     <Reference Include="Thinktecture.IdentityModel.Client.Net45">
       <HintPath>..\packages\Thinktecture.IdentityModel.Client.4.0.1\lib\net45\Thinktecture.IdentityModel.Client.Net45.dll</HintPath>
     </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Core">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.2.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Owin.ResourceAuthorization">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Owin.ResourceAuthorization.1.0.1\lib\net45\Thinktecture.IdentityModel.Owin.ResourceAuthorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.2.0.0\lib\net45\Thinktecture.IdentityModel.Owin.ResourceAuthorization.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -160,6 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthorizationManager.cs" />
     <Compile Include="Helpers\EndpointAndTokenHelper.cs" />
     <Compile Include="Helpers\ExpenseTrackerHttpClient.cs" />
     <Compile Include="Helpers\HeaderParser.cs" />

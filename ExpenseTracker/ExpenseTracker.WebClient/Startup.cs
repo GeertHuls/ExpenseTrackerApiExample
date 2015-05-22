@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Constants;
+using ExpenseTracker.Repository.Helpers;
 using ExpenseTracker.WebClient.Helpers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -27,6 +28,8 @@ namespace ExpenseTracker.WebClient
 
             //Use this claim instead of identifier or identity provider claim
             AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
+
+            app.UseResourceAuthorization(new AuthorizationManager());
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
