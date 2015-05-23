@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ExpenseTracker.MobileClient.Common;
 using ExpenseTracker.MobileClient.View;
+using ExpenseTracker.MobileClient.Helpers;
 
 
 namespace ExpenseTracker.MobileClient
@@ -24,9 +25,12 @@ namespace ExpenseTracker.MobileClient
 
     public sealed partial class App : Application
     {
+        public static ContinuationManager continuationManager { get; private set; }
 
         private TransitionCollection transitions;
         public static Frame RootFrame = null;
+
+        public static ExpenseTrackerIdentity ExpenseTrackerIdentity { get; set; }
 
         /// <summary>
         /// Initializes the singleton instance of the <see cref="App"/> class. This is the first line of authored code

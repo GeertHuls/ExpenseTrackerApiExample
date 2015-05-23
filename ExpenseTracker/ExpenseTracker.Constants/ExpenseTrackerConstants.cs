@@ -12,5 +12,10 @@ namespace ExpenseTracker.Constants
         public const string IdSrvToken = IdSrv + "/connect/token";
         public const string IdSrvAuthorize = IdSrv + "/connect/authorize";
         public const string IdSrvUserInfo = IdSrv + "/connect/userinfo";
+
+        public const string IdSrvWp = "https://localhost:44305/identity";
+        public const string IdSrvTokenWp = IdSrvWp + "/connect/token";
+        public const string IdSrvAuthorizeWp = IdSrvWp + "/connect/authorize";
+        public const string IdSrvUserInfoWp = IdSrvWp + "/connect/userinfo";
     }
 }

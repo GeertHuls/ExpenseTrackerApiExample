@@ -1,8 +1,5 @@
 ﻿using ExpenseTracker.Constants;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Thinktecture.IdentityServer.Core.Models;
 
 namespace ExpenseTracker.IdSrv.Config
@@ -26,6 +23,28 @@ namespace ExpenseTracker.IdSrv.Config
                         {
                             ExpenseTrackerConstants.ExpenseTrackerClient
                         }
+                },
+
+                new Client
+                {
+                    ClientName = "Expense Tracker Native Client (Implicit Flow)",
+                    Enabled = true,
+                    ClientId = "native", 
+                    Flow = Flows.Implicit,
+                    RequireConsent = true,
+                                        
+                    RedirectUris = new List<string>
+                    {
+                        ExpenseTrackerConstants.ExpenseTrackerMobile
+                    },
+
+                    //This WP client will only support a subset of scopes.
+                    //If no restrictions are set, then all previous scopes are used.
+                    ScopeRestrictions = new List<string>
+                    { 
+                        Thinktecture.IdentityServer.Core.Constants.StandardScopes.OpenId, 
+                        "roles"
+                    }
                 }
             };
         }

@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
  
@@ -35,7 +36,6 @@ namespace ExpenseTracker.MobileClient.ViewModel
             }
         }
 
-
         public ExpenseGroupsViewModel()
         {
             Messenger.Default.Register<LoadExpenseGroupsMessage>(this, (msg) => GetExpenseGroups());
@@ -46,8 +46,13 @@ namespace ExpenseTracker.MobileClient.ViewModel
              // load open expense groups
             var client = ExpenseTrackerHttpClient.GetClient();
 
+            string userId = App.ExpenseTrackerIdentity.Claims
+                .First(c => c.Name == "unique_user_key").Value;
+
             HttpResponseMessage response = await client
-                .GetAsync("api/expensegroups?fields=id,title,description&status=open");
+                .GetAsync("api/expensegroups?fields=id,title,description&status=open"
+                          + "&userId=" + userId);
+
             string content = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
@@ -59,7 +64,6 @@ namespace ExpenseTracker.MobileClient.ViewModel
             {
                 // something went wrong, log this, handle this, show message, ...
             }
-
         }
     }
 }
