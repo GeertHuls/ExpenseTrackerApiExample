@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Thinktecture.IdentityModel.Owin.ResourceAuthorization;
 
-namespace ExpenseTracker.Repository.Helpers
+namespace ExpenseTracker.API.Helpers
 {
-    public class AuthorizationManager : ResourceAuthorizationManager//An authorization manager on api level also exists
+
+    public class AuthorizationManager : ResourceAuthorizationManager //An authorization manager on web client level also exists
     {
         public override Task<bool> CheckAccessAsync(ResourceAuthorizationContext context)
         {
@@ -25,16 +23,17 @@ namespace ExpenseTracker.Repository.Helpers
             switch (context.Action.First().Value)
             {
                 case "Read":
-                    // to be able to read an expense group, the user must be in the
-                    // WebReadUser role
-                    return Eval(context.Principal.HasClaim("role", "WebReadUser"));
-                case "Write":
-                    // to be able to create an expense group, the user must be in the
-                    // WebWriteUser role
-                    return Eval(context.Principal.HasClaim("role", "WebWriteUser"));
+                    // to be able to read an expensegroups from the API, the user must be in the
+                    // WebReadUser role or MobileReadUser role
+
+                    return
+                        Eval(context.Principal.HasClaim("role", "MobileReadUser")
+                        || (context.Principal.HasClaim("role", "WebReadUser")));
+
                 default:
                     return Nok();
             }
         }
+
     }
 }

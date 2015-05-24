@@ -1,4 +1,5 @@
-﻿using ExpenseTracker.Constants;
+﻿using ExpenseTracker.API.Helpers;
+using ExpenseTracker.Constants;
 using Microsoft.Owin;
 using Owin;
 using Thinktecture.IdentityServer.AccessTokenValidation;
@@ -11,6 +12,8 @@ namespace ExpenseTracker.Api
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseResourceAuthorization(new AuthorizationManager());
+
             //Ensure that id server only accepts access_token created on this server
             app.UseIdentityServerBearerTokenAuthentication(
                 new IdentityServerBearerTokenAuthenticationOptions

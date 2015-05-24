@@ -32,7 +32,15 @@ namespace ExpenseTracker.IdSrv.Config
                         Type = ScopeType.Resource, //This scope prevents public access so that only authorized client
                                                    //can access the expense tracker api
                         Emphasize = false,
-                        Enabled = true
+                        Enabled = true,
+                        //IncludeAllClaimsForUser = true //This will send all claims (eg role claims) back to api
+                                                         //We don't do this because we only send the claims that are
+                                                         //absolutely required.
+                        Claims = new List<ScopeClaim>
+                        {
+                            new ScopeClaim("role") //Only send the role claims
+                        }
+
                     },
 
                 };

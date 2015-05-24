@@ -123,6 +123,15 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Thinktecture.IdentityModel.Core">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.2.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Owin.ResourceAuthorization">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Owin.ResourceAuthorization.1.0.1\lib\net45\Thinktecture.IdentityModel.Owin.ResourceAuthorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi">
+      <HintPath>..\packages\Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi.3.0.0\lib\net45\Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Thinktecture.IdentityServer3.AccessTokenValidation">
       <HintPath>..\packages\Thinktecture.IdentityServer3.AccessTokenValidation.1.2.2\lib\net45\Thinktecture.IdentityServer3.AccessTokenValidation.dll</HintPath>
     </Reference>
@@ -148,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthorizationManager.cs" />
     <Compile Include="Helpers\IQueryableExtensions.cs" />
     <Compile Include="Helpers\VersionConstraint.cs" />
     <Compile Include="Helpers\VersionedRoute.cs" />

@@ -99,6 +99,8 @@ namespace ExpenseTracker.WebClient
                     //Using claims transformation
                     SecurityTokenValidated = async n =>
                     {
+                        //Debug access token use: EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.AccessToken)
+
                         var userInfo = await EndpointAndTokenHelper.CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);
 
                         var givenNameClaim = new Claim(

@@ -52,8 +52,8 @@ namespace ExpenseTracker.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Nils"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Missorten"),
-                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
-                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser")
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebWriteUser"), //The user cannot read data anymore
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileWriteUser")
                }
             },
 
