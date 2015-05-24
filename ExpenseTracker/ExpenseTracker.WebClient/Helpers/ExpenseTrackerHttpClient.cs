@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Web;
 
 namespace ExpenseTracker.WebClient.Helpers
 {

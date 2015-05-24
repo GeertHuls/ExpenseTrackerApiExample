@@ -30,7 +30,7 @@ namespace ExpenseTracker.IdSrv.Config
                         Name = "expensetrackerapi",
                         DisplayName = "ExpenseTracker API Scope",
                         Type = ScopeType.Resource, //This scope prevents public access so that only authorized client
-                                                    //can access the id server
+                                                   //can access the expense tracker api
                         Emphasize = false,
                         Enabled = true
                     },

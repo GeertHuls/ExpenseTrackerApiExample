@@ -137,7 +137,7 @@ namespace ExpenseTracker.WebClient
                         //Add access token to list of cliams, next pass this access token to api on each call
                         //so that resource scope can fulfill requests. To do this add it to the bearer token
                         //in the http client headers.
-                        newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken))
+                        newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
 
                         n.AuthenticationTicket = new AuthenticationTicket(
                             newIdentity,

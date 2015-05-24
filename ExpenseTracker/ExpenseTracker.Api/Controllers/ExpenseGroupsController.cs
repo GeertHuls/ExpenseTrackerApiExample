@@ -14,6 +14,7 @@ using System.Web.Http.Routing;
 
 namespace ExpenseTracker.API.Controllers
 {
+    [Authorize]
     [EnableCors("*", "*"/*ACCEPT*/, "GET,POST")]
     public class ExpenseGroupsController : ApiController
     {
