@@ -23,7 +23,18 @@ namespace ExpenseTracker.IdSrv.Config
                         {
                             new ScopeClaim("role")
                         }
-                    }
+                    },
+
+                    new Scope
+                    {
+                        Name = "expensetrackerapi",
+                        DisplayName = "ExpenseTracker API Scope",
+                        Type = ScopeType.Resource, //This scope prevents public access so that only authorized client
+                                                    //can access the id server
+                        Emphasize = false,
+                        Enabled = true
+                    },
+
                 };
 
             return scopes;

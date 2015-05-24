@@ -2,6 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace ExpenseTracker.WebClient.Helpers
 {
@@ -11,6 +12,13 @@ namespace ExpenseTracker.WebClient.Helpers
         public static HttpClient GetClient(string requestedVersion = null)
         {
             HttpClient client = new HttpClient();
+
+            //Add the access token as bearertoken for resource scope security
+            var token = (HttpContext.Current.User.Identity as ClaimsIdentity).FindFirst("access_token");
+            if (token != null)
+            {
+                client.SetBearerToken(token.Value);
+            }
 
             client.BaseAddress = new Uri(ExpenseTrackerConstants.ExpenseTrackerAPI);
             client.DefaultRequestHeaders.Accept.Clear();

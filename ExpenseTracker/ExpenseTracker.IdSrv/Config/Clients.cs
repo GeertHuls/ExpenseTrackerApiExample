@@ -43,7 +43,8 @@ namespace ExpenseTracker.IdSrv.Config
                     ScopeRestrictions = new List<string>
                     { 
                         Thinktecture.IdentityServer.Core.Constants.StandardScopes.OpenId, 
-                        "roles"
+                        "roles",
+                        "expensetrackerapi" //Also include the resource scope for wp client
                     }
                 }
             };

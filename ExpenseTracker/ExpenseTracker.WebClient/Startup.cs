@@ -73,9 +73,10 @@ namespace ExpenseTracker.WebClient
                 // - ...
                 //Check openid tech spec to get a full list of scope types
 
-                Scope = "openid profile roles",
+                Scope = "openid profile roles expensetrackerapi",
                 //openid scope is a requirement for openid support
                 //roles scope to request roles from id server
+                //expensetrackerapi to allow access to the api
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
@@ -132,6 +133,11 @@ namespace ExpenseTracker.WebClient
 
                         newIdentity.AddClaim(new Claim("unique_user_key", //this claim is used as AntiForgery token
                             issuerClaim.Value + "_" + subjectClaim.Value)); //userId is composed of issuer and subject
+
+                        //Add access token to list of cliams, next pass this access token to api on each call
+                        //so that resource scope can fulfill requests. To do this add it to the bearer token
+                        //in the http client headers.
+                        newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken))
 
                         n.AuthenticationTicket = new AuthenticationTicket(
                             newIdentity,
