@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -63,6 +64,27 @@ namespace ExpenseTracker.API.Controllers
         {
             try
             {
+
+                System.Security.Claims.Claim iss = null, sub = null;
+                var identity = this.User.Identity as ClaimsIdentity;
+
+                if (identity != null)
+                {
+                    iss = identity.FindFirst("iss");
+                    sub = identity.FindFirst("sub");
+                }
+
+                // set the user id to this key
+                if (iss != null && sub != null)
+                {
+                    userId = iss.Value + "_" + sub.Value;
+                }
+                else
+                {
+                    // if there's no unique key, we shouldn't be able to continue
+                    return StatusCode(HttpStatusCode.Forbidden);
+                }
+
                 bool includeExpenses = false;
                 List<string> lstOfFields = new List<string>();
 

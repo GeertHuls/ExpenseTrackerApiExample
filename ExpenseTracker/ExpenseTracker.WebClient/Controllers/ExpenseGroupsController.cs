@@ -39,10 +39,8 @@ namespace ExpenseTracker.WebClient.Controllers
                 return Content("An error occurred.");
             }
 
-            string userId = (this.User.Identity as ClaimsIdentity).FindFirst("unique_user_key").Value;
-
             var response = await client.GetAsync("api/expensegroups?sort=expensegroupstatusid"
-                + ",title&page=" + page + "&pagesize=5&userid=" + userId);
+                + ",title&page=" + page + "&pagesize=5");
 
             if (response.IsSuccessStatusCode)
             {
