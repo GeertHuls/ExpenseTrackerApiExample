@@ -7,11 +7,13 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Newtonsoft.Json.Linq;
 using Owin;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
 using System.Web.Helpers;
+using Thinktecture.IdentityModel.Client;
 
 [assembly: OwinStartup(typeof(ExpenseTracker.WebClient.Startup))]
 
@@ -73,7 +75,7 @@ namespace ExpenseTracker.WebClient
                 // - ...
                 //Check openid tech spec to get a full list of scope types
 
-                Scope = "openid profile roles expensetrackerapi",
+                Scope = "openid profile roles expensetrackerapi offline_access",
                 //openid scope is a requirement for openid support
                 //roles scope to request roles from id server
                 //expensetrackerapi to allow access to the api
@@ -152,7 +154,23 @@ namespace ExpenseTracker.WebClient
                         //Add access token to list of cliams, next pass this access token to api on each call
                         //so that resource scope can fulfill requests. To do this add it to the bearer token
                         //in the http client headers.
-                        newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
+                        //newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken)); // this token is replaced by the refresh tokens below:
+
+
+                        // use the authorization code to get a refresh token 
+                        var tokenEndpointClient = new OAuth2Client(
+                            new Uri(ExpenseTrackerConstants.IdSrvToken),
+                            "mvc", "secret");
+
+                        var tokenResponse = await tokenEndpointClient.RequestAuthorizationCodeAsync(
+                            n.ProtocolMessage.Code, ExpenseTrackerConstants.ExpenseTrackerClient);
+
+                        newIdentity.AddClaim(new Claim("refresh_token", tokenResponse.RefreshToken));
+                        newIdentity.AddClaim(new Claim("access_token", tokenResponse.AccessToken));
+                        newIdentity.AddClaim(new Claim("expires_at",
+                            DateTime.Now.AddSeconds(tokenResponse.ExpiresIn).ToLocalTime().ToString()));
+
+
 
                         n.AuthenticationTicket = new AuthenticationTicket(
                             newIdentity,

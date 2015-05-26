@@ -15,14 +15,25 @@ namespace ExpenseTracker.IdSrv.Config
                     Enabled = true,
                     ClientName = "ExpenseTracker MVC Client (Hybrid Flow)",
                     ClientId = "mvc",
-                    Flow = Flows.Hybrid,
+                    Flow = Flows.Hybrid, //hybrid flow is mix between implit + authorization code
                     RequireConsent = true, //ensures that user will see approve consent screen
                     //(in this example we only ask for openid so the app only ask to allow personal identity)
 
                     RedirectUris = new List<string>
                         {
                             ExpenseTrackerConstants.ExpenseTrackerClient
-                        }
+                        },
+
+                    AccessTokenLifetime = 60, //refresh token of 60 seconds
+                                             //the hybrid slow does not directly retrun refresh token
+                                             //instead we'll have to ask for it using the token end point
+                                             //passing in the authorization code
+
+                    ClientSecrets = new List<ClientSecret>() //this client secret will be used
+                                            //to call for refresh token demand (server to server using code authorization
+                    {
+                        new ClientSecret("secret".Sha256())
+                    }
                 },
 
                 new Client

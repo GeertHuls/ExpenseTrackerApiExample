@@ -50,7 +50,9 @@ namespace ExpenseTracker.IdSrv.Config
                         Type = ScopeType.Resource,
                         Emphasize = false,
                         Enabled = true
-                    }
+                    },
+
+                    StandardScopes.OfflineAccess //to support refresh access tokens
 
                 };
 
