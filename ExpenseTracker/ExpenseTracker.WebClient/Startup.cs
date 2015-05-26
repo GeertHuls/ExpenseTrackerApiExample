@@ -136,6 +136,19 @@ namespace ExpenseTracker.WebClient
                         newIdentity.AddClaim(new Claim("unique_user_key", //this claim is used as AntiForgery token
                             issuerClaim.Value + "_" + subjectClaim.Value)); //userId is composed of issuer and subject
 
+
+
+                        //This is used for client credentials flow (server to server):
+                        //var oAuth2Client = new OAuth2Client(
+                        // new Uri(ExpenseTrackerConstants.IdSrvToken),
+                        // "mvc_api",
+                        // "secret");
+
+                        //var response = oAuth2Client.RequestClientCredentialsAsync("expensetrackerapi").Result;
+                        //EndpointAndTokenHelper.DecodeAndWrite(response.AccessToken)
+
+
+
                         //Add access token to list of cliams, next pass this access token to api on each call
                         //so that resource scope can fulfill requests. To do this add it to the bearer token
                         //in the http client headers.

@@ -46,6 +46,17 @@ namespace ExpenseTracker.IdSrv.Config
                         "roles",
                         "expensetrackerapi" //Also include the resource scope for wp client
                     }
+                },
+
+                new Client //The client credential flow is only usefull in server to server
+                           //communication, because a secret has to be stored on 
+                           //on server. This flow also does not have an identity.
+                {
+                    Enabled = true,
+                    ClientName = "ExpenseTracker MVC Client API Access (Client Credentials Flow)",
+                    ClientId = "mvc_api",
+                    ClientSecrets = new List<ClientSecret>() {new ClientSecret("secret".Sha256())},               
+                    Flow = Flows.ClientCredentials
                 }
             };
         }

@@ -43,6 +43,15 @@ namespace ExpenseTracker.IdSrv.Config
 
                     },
 
+                    new Scope //There are no roles with the client credential flow since there is no user
+                    {
+                        Name = "expensetrackerapi",
+                        DisplayName = "ExpenseTracker API Scope",
+                        Type = ScopeType.Resource,
+                        Emphasize = false,
+                        Enabled = true
+                    }
+
                 };
 
             return scopes;

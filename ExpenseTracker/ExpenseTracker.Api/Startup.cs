@@ -18,7 +18,7 @@ namespace ExpenseTracker.Api
             app.UseIdentityServerBearerTokenAuthentication(
                 new IdentityServerBearerTokenAuthenticationOptions
             {
-                Authority = ExpenseTrackerConstants.IdSrv,
+                Authority = ExpenseTrackerConstants.IdSrv, //Only trust access token created in this url
                 RequiredScopes = new[] { "expensetrackerapi" } //This is the resource scope defined in the scopes.cs file
             });
             
