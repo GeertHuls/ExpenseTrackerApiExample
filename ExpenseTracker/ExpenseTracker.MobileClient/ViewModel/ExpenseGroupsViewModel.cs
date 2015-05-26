@@ -50,8 +50,7 @@ namespace ExpenseTracker.MobileClient.ViewModel
                 .First(c => c.Name == "unique_user_key").Value;
 
             HttpResponseMessage response = await client
-                .GetAsync("api/expensegroups?fields=id,title,description&status=open"
-                          + "&userId=" + userId);
+                .GetAsync("api/expensegroups?fields=id,title,description&status=open");
 
             string content = await response.Content.ReadAsStringAsync();
 

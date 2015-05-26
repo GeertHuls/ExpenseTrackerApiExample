@@ -19,11 +19,15 @@ namespace ExpenseTracker.MobileClient.Helpers
         {
             if (currentClient == null)
             {
-                currentClient = new HttpClient(
-                    new Marvin.HttpCache.HttpCacheHandler()
-                    {
-                        InnerHandler = new HttpClientHandler()
-                    });
+                var accessToken = App.ExpenseTrackerIdentity.Claims.First
+                    (c => c.Name == "access_token").Value;
+
+                currentClient = new HttpClient(new Marvin.HttpCache.HttpCacheHandler()
+                {
+                    InnerHandler = new HttpClientHandler()
+                });
+
+                currentClient.SetBearerToken(accessToken); //Set the access token to each http call as a bearertoken
 
                 currentClient.BaseAddress = new Uri(ExpenseTrackerConstants.ExpenseTrackerAPI);
 

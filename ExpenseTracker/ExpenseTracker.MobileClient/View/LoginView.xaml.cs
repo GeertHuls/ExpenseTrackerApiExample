@@ -67,12 +67,14 @@ namespace ExpenseTracker.MobileClient.View
             var startUrl = client.CreateAuthorizeUrl(
                 "native", //this client corresponds to client config on id srv level
                 "id_token token", //Request an id token + access token
-                 "openid roles", //the access token should contain the id and roles scope
+                 "openid roles expensetrackerapi", //the access token should contain the id and roles scope
                                 //will call the user info end point for this
 
                                 //We no longer use the authorization code as this does not belong to the implicit flow
                                 //The WP client isn't a confidential client...
                                 //If you do ask for the authorization code, this flow will fail.
+
+                                //Ask for the expensetrackerapi scope to get it included in the access token
                  ExpenseTrackerConstants.ExpenseTrackerMobile,
                  "state", //With state you can pass through values
                  nonce); //Number only used once, this is used by the STS to prevent replay attacks
