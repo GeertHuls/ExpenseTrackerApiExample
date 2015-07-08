@@ -90,7 +90,7 @@ namespace ExpenseTracker.WebClient
                 //roles scope to request roles from id server
                 //expensetrackerapi to allow access to the api
 
-                Notifications = new OpenIdConnectAuthenticationNotifications()
+                Notifications = new OpenIdConnectAuthenticationNotifications
                 {
                     MessageReceived = async n =>
                     {
@@ -174,6 +174,21 @@ namespace ExpenseTracker.WebClient
 
                         var tokenResponse = await tokenEndpointClient.RequestAuthorizationCodeAsync(
                             n.ProtocolMessage.Code, ExpenseTrackerConstants.ExpenseTrackerClient);
+
+                        //tokenResponse.IdentityToken <-- This is the token from openid connect.
+                        //  This extra special token was missing from the original naïve
+                        //  OAuth authentication implementation.
+                        //  This id token is meant for the client, its reponsibility
+                        //  is now immediately validate this id token.
+                        //  Inside this token are 4 important claims:
+                        //  - Issuer (iss): the id server
+                        //  - Subject (sub): identifies the user
+                        //  - Audience (aud): specifies for who this token is for,
+                        //      the client that initiated the request (this web client)
+                        //  - Expiration (exp): these token must be short lived, they cannot be kept alive forever
+                        //
+                        //  The token is signed, and it must be validated at this point.
+                        //  Ensure that all the players are legit.
 
                         newIdentity.AddClaim(new Claim("refresh_token", tokenResponse.RefreshToken));
                         newIdentity.AddClaim(new Claim("access_token", tokenResponse.AccessToken));
