@@ -190,6 +190,9 @@ namespace ExpenseTracker.WebClient
                         //  The token is signed, and it must be validated at this point.
                         //  Ensure that all the players are legit.
 
+                        //  Example how to validate id token:
+                        //  https://github.com/IdentityServer/basic.identityserver.io/blob/master/BasicClient/Controllers/AccountController.cs#L128
+
                         newIdentity.AddClaim(new Claim("refresh_token", tokenResponse.RefreshToken));
                         newIdentity.AddClaim(new Claim("access_token", tokenResponse.AccessToken));
                         newIdentity.AddClaim(new Claim("expires_at",
