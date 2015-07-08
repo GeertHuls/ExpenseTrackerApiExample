@@ -39,6 +39,16 @@ namespace ExpenseTracker.WebClient
             });
 
 
+            /***********************************************************************************************************
+             * The authorization code flow in a nutshell:
+             * ------------------------------------------
+             * Client calls auth server
+             * Auth server gives back a code to the client (web) app
+             * The web app checks for CSRF like validation (probably using some sort of state parameter)
+             * The client web app calls auth server back (using token endpoint) to finally get the access token (+optional refresh token)
+             * The client web app calls resource server with that access token
+             ***********************************************************************************************************/
+
             //Open connect middleware with supports hybrid flow:
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
             {
