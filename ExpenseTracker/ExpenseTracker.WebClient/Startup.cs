@@ -195,12 +195,13 @@ namespace ExpenseTracker.WebClient
                         //  Example how to validate id token:
                         //  https://github.com/IdentityServer/basic.identityserver.io/blob/master/BasicClient/Controllers/AccountController.cs#L128
 
+                        var expirationDate = DateTime.SpecifyKind(
+                            DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn),
+                            DateTimeKind.Utc).ToString("o");
+
                         newIdentity.AddClaim(new Claim("refresh_token", tokenResponse.RefreshToken));
                         newIdentity.AddClaim(new Claim("access_token", tokenResponse.AccessToken));
-                        newIdentity.AddClaim(new Claim("expires_at",
-                            DateTime.Now.AddSeconds(tokenResponse.ExpiresIn).ToLocalTime().ToString()));
-
-
+                        newIdentity.AddClaim(new Claim("expires_at", expirationDate));
 
                         n.AuthenticationTicket = new AuthenticationTicket(
                             newIdentity,
