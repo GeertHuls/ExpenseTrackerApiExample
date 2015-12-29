@@ -67,7 +67,7 @@ namespace ExpenseTracker.WebClient.Helpers
                     // new identity!                              
                     var result = from claim in id.Claims
                                  where claim.Type != "access_token" && claim.Type != "refresh_token" &&
-                                       claim.Type != "expires_at"
+                                       claim.Type != "expires_at" && claim.Type != "id_token"
                                  select claim;
 
                     var claims = result.ToList();

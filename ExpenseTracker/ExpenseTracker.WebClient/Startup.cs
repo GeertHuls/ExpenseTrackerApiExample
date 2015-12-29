@@ -12,7 +12,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Helpers;
+using Microsoft.IdentityModel.Protocols;
 using Thinktecture.IdentityModel.Client;
 
 [assembly: OwinStartup(typeof(ExpenseTracker.WebClient.Startup))]
@@ -202,11 +204,27 @@ namespace ExpenseTracker.WebClient
                         newIdentity.AddClaim(new Claim("refresh_token", tokenResponse.RefreshToken));
                         newIdentity.AddClaim(new Claim("access_token", tokenResponse.AccessToken));
                         newIdentity.AddClaim(new Claim("expires_at", expirationDate));
+                        newIdentity.AddClaim(new Claim("id_token", tokenResponse.IdentityToken));
 
                         n.AuthenticationTicket = new AuthenticationTicket(
                             newIdentity,
                             n.AuthenticationTicket.Properties);
                     },
+
+                    RedirectToIdentityProvider = async n =>
+                    {
+                        if (n.ProtocolMessage.RequestType == OpenIdConnectRequestType.LogoutRequest)
+                        {
+                            var idTokenHint = n.OwinContext.Authentication.User.FindFirst("id_token");
+
+                            if (idTokenHint != null)
+                            {
+                                n.ProtocolMessage.IdTokenHint = idTokenHint.Value; //Bypass the singout prompt of identity server
+                            }
+                        }
+
+                        await Task.FromResult(0);
+                    }
                 }
             });
 
