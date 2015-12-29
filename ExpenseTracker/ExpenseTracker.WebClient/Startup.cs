@@ -35,7 +35,9 @@ namespace ExpenseTracker.WebClient
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "Cookies"
+                AuthenticationType = "Cookies",
+                //ExpireTimeSpan = new TimeSpan()
+                //SlidingExpiration = true
             });
 
 
