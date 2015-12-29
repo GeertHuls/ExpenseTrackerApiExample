@@ -85,6 +85,8 @@ namespace ExpenseTracker.WebClient.Helpers
                 else
                 {
                     // log, ...
+                    //or:
+                    //HttpContext.Current.Request.GetOwinContext().Authentication.SignOut();
                     throw new Exception("An error has occurred");
                 }
             }
